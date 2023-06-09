@@ -1,3 +1,4 @@
+import AddTodo from "@/components/AddTodo";
 import TodoList from "@/components/TodoList";
 
 import styled from "styled-components";
@@ -20,6 +21,7 @@ export default function Home() {
   return (
     <Container>
       <TodoList todos={[]} />
+      <AddTodo />
     </Container>
   );
 }
