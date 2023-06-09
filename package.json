@@ -11,16 +11,19 @@
     "prebuild": "cross-env NODE_ENV=production ts-node --project ./tsconfig,node.json ./scripts/get.antd.css.tsx"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.1.4",
     "@ant-design/static-style-extract": "^1.0.1",
+    "@types/lodash": "^4.14.195",
     "@types/node": "18.16.0",
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",
     "antd": "^5.4.5",
+    "lodash": "^4.17.21",
     "next": "13.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^5.3.10",
-    "styled-reset": "^4.4.6",
+    "styled-reset": "^4.4.7",
     "typescript": "5.0.4"
   },
   "devDependencies": {
