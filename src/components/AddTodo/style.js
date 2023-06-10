@@ -78,7 +78,6 @@ export const Modal = styled.div`
 
     &-button {
       flex: none;
-      padding: 8px;
       margin-left: 10px;
       display: block;
       cursor: pointer;
