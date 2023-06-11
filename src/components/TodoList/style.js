@@ -25,13 +25,6 @@ const Container = styled.div`
     margin: 30px 0 20px !important;
     border-top: 1px solid #e9e9e9 !important;
   }
-
-  .filter-row {
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: row;
-    margin-bottom: 20px !important;
-  }
 `;
 
 export default Container;

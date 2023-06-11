@@ -5,9 +5,9 @@ export enum EPriority {
 }
 
 export interface ITodo {
-  id?: string;
+  id?: number;
   content: string;
   completed?: boolean;
   priority?: EPriority;
-  categoryIds?: string[];
+  categoryIds?: number[];
 }

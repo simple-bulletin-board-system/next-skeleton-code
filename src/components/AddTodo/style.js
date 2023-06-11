@@ -32,23 +32,15 @@ export const Modal = styled.div`
 
   .modal {
     &-header {
-      margin-top: 60px;
+      margin-top: 40px;
       padding: 0 36px;
     }
 
     &-body {
       display: flex;
       flex-direction: column;
-      justify-content: flext-start;
+      justify-content: flex-start;
       padding: 0 36px;
-    }
-
-    &-footer {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      padding-left: 24px;
-      padding-right: 24px;
     }
   }
 

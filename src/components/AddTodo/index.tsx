@@ -12,15 +12,22 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
+import capitalize from "lodash/capitalize";
 import { EPriority } from "@/models/todo.model";
+import { ICategory } from "@/models/category.model";
 
 import * as Container from "./style";
 
-interface IAddTodo {
-  disabled?: boolean;
+interface IAddTodoCategory extends ICategory {
+  id: number;
 }
 
-export default function AddTodo({ disabled = false }: IAddTodo) {
+interface IAddTodo {
+  disabled?: boolean;
+  categories: IAddTodoCategory[];
+}
+
+export default function AddTodo({ disabled = false, categories }: IAddTodo) {
   const [open, setOpen] = useState<boolean>(false);
   const [form] = Form.useForm();
 
@@ -72,6 +79,10 @@ export default function AddTodo({ disabled = false }: IAddTodo) {
                       document.body
                     }
                     mode="multiple"
+                    options={categories.map((category) => ({
+                      label: category.content,
+                      value: category.id,
+                    }))}
                     placeholder="Choose Categories"
                   />
                 </Form.Item>
@@ -79,9 +90,9 @@ export default function AddTodo({ disabled = false }: IAddTodo) {
                   <Slider
                     marks={{
                       0: "None",
-                      1: EPriority.LOW,
-                      2: EPriority.MEDIUM,
-                      3: EPriority.HIGH,
+                      1: capitalize(EPriority.LOW),
+                      2: capitalize(EPriority.MEDIUM),
+                      3: capitalize(EPriority.HIGH),
                     }}
                     max={3}
                     tooltip={{ open: false }}
