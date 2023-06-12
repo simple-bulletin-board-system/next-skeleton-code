@@ -21,6 +21,16 @@ const Container = styled.div`
     }
   }
 
+  .ant {
+    &-list {
+      &-items {
+        & > div {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
   .divider {
     margin: 30px 0 20px !important;
     border-top: 1px solid #e9e9e9 !important;

@@ -27,7 +27,7 @@ export default function FilterTodo({ categories }: IFilterTodo) {
 
   return (
     <>
-      <Modal okText="Save" onCancel={modalToggle} open={open}>
+      <Modal destroyOnClose okText="Save" onCancel={modalToggle} open={open}>
         <Container.Modal id="filter-todo-modal-container">
           <div>
             <div className="modal-header">

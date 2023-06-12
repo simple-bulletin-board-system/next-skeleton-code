@@ -37,7 +37,13 @@ export default function AddTodo({ disabled = false, categories }: IAddTodo) {
 
   return (
     <>
-      <Modal open={open} okText="Save" onCancel={modalToggle} width={1000}>
+      <Modal
+        destroyOnClose
+        open={open}
+        okText="Save"
+        onCancel={modalToggle}
+        width={1000}
+      >
         <Container.Modal id="add-todo-modal-container">
           <div>
             <div className="modal-header">

@@ -3,6 +3,8 @@ import TodoList from "@/components/TodoList";
 
 import styled from "styled-components";
 
+import { EPriority } from "@/models/todo.model";
+
 const Container = styled.div`
   padding: 0 36px;
 
