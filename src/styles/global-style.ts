@@ -1,8 +1,12 @@
-import { createGlobalStyle } from 'styled-components'
-import reset from 'styled-reset'
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
+
+    body {
+        background-color: #f6f9fb;
+    }
 
     *::-webkit-scrollbar {
         width: 12px;
@@ -21,6 +25,6 @@ const GlobalStyle = createGlobalStyle`
         border-radius: 12px;
         box-shadow: none;
     }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;
