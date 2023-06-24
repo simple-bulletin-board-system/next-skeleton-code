@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import {
   Button,
   Divider,
@@ -23,17 +21,21 @@ interface IAddTodoCategory extends ICategory {
 }
 
 interface IAddTodo {
-  disabled?: boolean;
   categories: IAddTodoCategory[];
+  disabled?: boolean;
+  open?: boolean;
+  onClose?: () => void;
+  onOpen?: () => void;
 }
 
-export default function AddTodo({ disabled = false, categories }: IAddTodo) {
-  const [open, setOpen] = useState<boolean>(false);
+export default function AddTodo({
+  disabled = false,
+  categories,
+  open = false,
+  onClose = () => {},
+  onOpen = () => {},
+}: IAddTodo) {
   const [form] = Form.useForm();
-
-  const modalToggle = (): void => {
-    setOpen((prev) => !prev);
-  };
 
   return (
     <>
@@ -41,7 +43,7 @@ export default function AddTodo({ disabled = false, categories }: IAddTodo) {
         destroyOnClose
         open={open}
         okText="Save"
-        onCancel={modalToggle}
+        onCancel={onClose}
         width={1000}
       >
         <Container.Modal id="add-todo-modal-container">
@@ -114,7 +116,7 @@ export default function AddTodo({ disabled = false, categories }: IAddTodo) {
           className={`add-todo-button${disabled ? " disabled" : ""}`}
           disabled={disabled}
           icon={<PlusOutlined />}
-          onClick={modalToggle}
+          onClick={onOpen}
           type="primary"
         />
       </Container.AddTodoButton>

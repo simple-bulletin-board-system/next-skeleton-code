@@ -5,7 +5,7 @@ import * as httpStatus from "@/constants/http/status";
 import { ITodo } from "@/models/todo.model";
 
 let sequence = 1;
-export const database: ITodo[] = new Array();
+export const database = new Array<ITodo[]>();
 
 export default function handler(
   request: NextApiRequest,

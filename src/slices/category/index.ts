@@ -1,21 +1,38 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import LoadingStatus from "@/constants/loading/status";
 import { ICategory } from "@/models/category.model";
 
+interface IReducerCategory extends ICategory {
+  id: number;
+}
+
 export interface ICategoryState {
-  loading: boolean;
-  categories: ICategory[];
+  loading: LoadingStatus;
+  categories: IReducerCategory[];
 }
 
 const initialState: ICategoryState = {
-  loading: false,
+  loading: LoadingStatus.PENDING,
   categories: [],
 };
 
 const slice = createSlice({
   name: "category",
   initialState,
-  reducers: { reset: () => initialState },
+  reducers: {
+    findAll: (state) => {
+      state.loading = LoadingStatus.PENDING;
+    },
+    successFindAll: (state, action: PayloadAction<IReducerCategory[]>) => {
+      state.loading = LoadingStatus.SUCCESS;
+      state.categories = action.payload;
+    },
+    failFindAll: (state) => {
+      state.loading = LoadingStatus.FAIL;
+    },
+    reset: () => initialState,
+  },
 });
 
 const { reducer: categoryReducer } = slice;

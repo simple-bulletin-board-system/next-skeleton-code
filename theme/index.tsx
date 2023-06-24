@@ -1,12 +1,12 @@
-import React from 'react'
-import { ConfigProvider } from 'antd'
+import React from "react";
+import { ConfigProvider } from "antd";
 
 const withTheme = (node: JSX.Element) => (
   <>
-    <ConfigProvider theme={{ token: { fontFamily: 'Noto Sans KR' } }}>
+    <ConfigProvider theme={{ token: { fontFamily: "Noto Sans KR" } }}>
       {node}
     </ConfigProvider>
   </>
-)
+);
 
-export default withTheme
+export default withTheme;

@@ -7,16 +7,27 @@ import {
   AnyAction,
 } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
-import createSagaMiddleware from "redux-saga";
+import { Store } from "redux";
+import createSagaMiddleware, { Task } from "redux-saga";
 
 import reducer, { RootState } from "./reducer";
+import saga from "./saga";
+
+interface SagaStore extends Store {
+  sagaTask?: Task;
+}
 
 const createStore = () => {
-  return configureStore({
+  const sagaMiddleware = createSagaMiddleware();
+  const config = configureStore({
     reducer: reducer as Reducer<CombinedState<RootState>, AnyAction>,
-    middleware: [createSagaMiddleware()],
+    middleware: [sagaMiddleware],
     devTools: process.env.NODE_ENV !== "production",
   });
+
+  (config as SagaStore).sagaTask = sagaMiddleware.run(saga);
+
+  return config;
 };
 
 const store = createStore();
