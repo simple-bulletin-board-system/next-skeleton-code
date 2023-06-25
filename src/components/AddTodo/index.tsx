@@ -64,6 +64,10 @@ export default function AddTodo({
   useEffect(() => {
     switch (categoryPostLoading) {
       case LoadingStatus.SUCCESS:
+        messageApi.open({
+          type: "success",
+          content: "😊 Completed category registration successfully.",
+        });
         setCategoryContent("");
         break;
       case LoadingStatus.FAIL:
