@@ -15,6 +15,13 @@ export const database = new Array<IGetResponseCategory>(
   { id: 3, content: "👩‍💻 Working" }
 );
 
+function saveCategory(category: ICategory) {
+  const target = { id: sequence, ...category };
+  database.push(target);
+  sequence += 1;
+  return target;
+}
+
 export default function handler(
   request: NextApiRequest,
   response: NextApiResponse<IGetResponseCategory[] | ICategory>
@@ -22,6 +29,9 @@ export default function handler(
   const { method, body } = request;
 
   switch (method) {
+    case httpMethod.POST:
+      response.status(httpStatus.CREATED).json(saveCategory(body));
+      break;
     case httpMethod.GET:
       response.status(httpStatus.OK).json(database);
       break;

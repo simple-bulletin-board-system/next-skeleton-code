@@ -1,8 +1,11 @@
+import { ChangeEvent, useEffect, useState } from "react";
+
 import {
   Button,
   Divider,
   Form,
   Input,
+  message,
   Modal,
   Select,
   Slider,
@@ -11,6 +14,7 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 
 import capitalize from "lodash/capitalize";
+import LoadingStatus from "@/constants/loading/status";
 import { EPriority } from "@/models/todo.model";
 import { ICategory } from "@/models/category.model";
 
@@ -21,24 +25,61 @@ interface IAddTodoCategory extends ICategory {
 }
 
 interface IAddTodo {
+  addCategory: (category: ICategory) => void;
   categories: IAddTodoCategory[];
+  categoryGetLoading?: boolean;
+  categoryPostLoading?: LoadingStatus;
   disabled?: boolean;
   open?: boolean;
-  onClose?: () => void;
-  onOpen?: () => void;
+  onClose: () => void;
+  onOpen: () => void;
 }
 
 export default function AddTodo({
+  addCategory,
   disabled = false,
   categories,
+  categoryGetLoading = false,
+  categoryPostLoading,
   open = false,
-  onClose = () => {},
-  onOpen = () => {},
+  onClose,
+  onOpen,
 }: IAddTodo) {
   const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [categoryContent, setCategoryContent] = useState<string>("");
+  const [abledAddCategory, setAbledAddCategory] = useState<boolean>(false);
+
+  const onAddCategoryClick = (value: string) => {
+    addCategory({ content: value });
+  };
+
+  const onAddCategoryInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    const abled = value.trim().length > 0;
+    setAbledAddCategory(abled);
+    setCategoryContent(value);
+  };
+
+  useEffect(() => {
+    switch (categoryPostLoading) {
+      case LoadingStatus.SUCCESS:
+        setCategoryContent("");
+        break;
+      case LoadingStatus.FAIL:
+        messageApi.open({
+          type: "error",
+          content: "🙏 Sorry, Failed to get category list.",
+        });
+        break;
+      default:
+        break;
+    }
+  }, [categoryPostLoading]);
 
   return (
     <>
+      {contextHolder}
       <Modal
         destroyOnClose
         open={open}
@@ -72,10 +113,19 @@ export default function AddTodo({
                         {menu}
                         <Divider className="divider" />
                         <div className="add-todo-category-container">
-                          <Input className="add-todo-category-input" />
+                          <Input
+                            className="add-todo-category-input"
+                            onChange={onAddCategoryInputChange}
+                            value={categoryContent}
+                          />
                           <Button
                             className="add-todo-category-button"
+                            disabled={!abledAddCategory}
+                            loading={
+                              categoryPostLoading === LoadingStatus.PENDING
+                            }
                             icon={<PlusOutlined />}
+                            onClick={() => onAddCategoryClick(categoryContent)}
                           >
                             Add Category
                           </Button>
@@ -86,6 +136,7 @@ export default function AddTodo({
                       document.getElementById("add-todo-modal-container") ??
                       document.body
                     }
+                    loading={categoryGetLoading}
                     mode="multiple"
                     options={categories.map((category) => ({
                       label: category.content,

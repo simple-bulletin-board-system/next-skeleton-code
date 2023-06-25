@@ -8,12 +8,14 @@ interface IReducerCategory extends ICategory {
 }
 
 export interface ICategoryState {
-  loading: LoadingStatus;
+  postLoading: LoadingStatus | undefined;
+  getLoading: LoadingStatus;
   categories: IReducerCategory[];
 }
 
 const initialState: ICategoryState = {
-  loading: LoadingStatus.PENDING,
+  postLoading: undefined,
+  getLoading: LoadingStatus.PENDING,
   categories: [],
 };
 
@@ -21,15 +23,25 @@ const slice = createSlice({
   name: "category",
   initialState,
   reducers: {
+    save: (state, _action: PayloadAction<ICategory>) => {
+      state.postLoading = LoadingStatus.PENDING;
+    },
+    successSave: (state, action) => {
+      state.postLoading = LoadingStatus.SUCCESS;
+      state.categories = state.categories.concat(action.payload);
+    },
+    failSave: (state) => {
+      state.postLoading = LoadingStatus.FAIL;
+    },
     findAll: (state) => {
-      state.loading = LoadingStatus.PENDING;
+      state.getLoading = LoadingStatus.PENDING;
     },
     successFindAll: (state, action: PayloadAction<IReducerCategory[]>) => {
-      state.loading = LoadingStatus.SUCCESS;
+      state.getLoading = LoadingStatus.SUCCESS;
       state.categories = action.payload;
     },
     failFindAll: (state) => {
-      state.loading = LoadingStatus.FAIL;
+      state.getLoading = LoadingStatus.FAIL;
     },
     reset: () => initialState,
   },
