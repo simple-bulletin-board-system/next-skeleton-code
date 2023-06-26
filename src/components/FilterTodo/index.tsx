@@ -15,9 +15,13 @@ interface IFilterTodoCategory extends ICategory {
 
 interface IFilterTodo {
   categories: IFilterTodoCategory[];
+  categoryGetLoading: boolean;
 }
 
-export default function FilterTodo({ categories }: IFilterTodo) {
+export default function FilterTodo({
+  categories,
+  categoryGetLoading,
+}: IFilterTodo) {
   const [open, setOepn] = useState<boolean>(false);
   const [form] = Form.useForm();
 
@@ -49,6 +53,7 @@ export default function FilterTodo({ categories }: IFilterTodo) {
                       document.getElementById("add-todo-modal-container") ??
                       document.body
                     }
+                    loading={categoryGetLoading}
                     mode="multiple"
                     options={categories.map((category) => ({
                       label: category.content,

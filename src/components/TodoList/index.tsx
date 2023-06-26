@@ -25,6 +25,7 @@ interface ITodoListTodo extends ITodo {
 
 interface ITodoList {
   categories: ITodoListCategory[];
+  categoryGetLoading?: boolean;
   hasError?: boolean;
   loading?: boolean;
   todos: ITodoListTodo[];
@@ -32,6 +33,7 @@ interface ITodoList {
 
 export default function TodoList({
   categories,
+  categoryGetLoading = false,
   hasError = false,
   loading = false,
   todos,
@@ -95,7 +97,6 @@ export default function TodoList({
       return <Result status="404" subTitle="Todos you add will appear here!" />;
     }
 
-    // TODO LIST PUBLISH
     return (
       <>
         <List
@@ -125,7 +126,10 @@ export default function TodoList({
   return (
     <Container>
       <Typography.Title className="todos-title">Todos</Typography.Title>
-      <FilterTodo categories={categories} />
+      <FilterTodo
+        categories={categories}
+        categoryGetLoading={categoryGetLoading}
+      />
       <Content hasError={hasError} loading={loading} />
     </Container>
   );
